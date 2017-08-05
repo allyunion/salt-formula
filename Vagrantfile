@@ -6,8 +6,11 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "ubuntu/xenial64"
-  config.vm.hostname = "salt"
+  config.vm.hostname = "saltmaster"
   config.vm.synced_folder "./", "/srv/salt", id: "vagrant-root"
+
+  config.vm.network "private_network", ip: "192.168.123.2",
+    virtualbox__intnet: true
 
   config.ssh.forward_agent = true
 
