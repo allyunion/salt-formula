@@ -13,7 +13,7 @@ sudo ln -s /srv/salt/pillar.example /srv/pillar/salt.sls
 sudo ln -s /srv/salt/dev/pillar_top.sls /srv/pillar/top.sls
 # this file will be copied to make a running config. it should not be checked in.
 sudo cp /srv/salt/dev/state_top.sls /srv/salt/top.sls
-sudo cp /vagrant/dev/etc/salt/minion /etc/salt/minion
+sudo cp /srv/salt/dev/etc/salt/minion /etc/salt/minion
 sudo service salt-minion restart
 # Accept all keys#
 sleep 15 #give the minion a few seconds to register
