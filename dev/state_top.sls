@@ -1,5 +1,6 @@
 base:
-  'salt':
-    - salt.master
+  '*':
     - salt.minion
-    - salt.cloud
+#    - salt.cloud
+  'saltmaster':
+    - salt.master

@@ -5,10 +5,10 @@ salt:
   clean_config_d_dir: False
 
   # This state will remove "/etc/salt/minion" when you set this to true.
-  minion_remove_config: True
+  minion_remove_config: False
 
   # This state will remove "/etc/salt/master" when you set this to true.
-  master_remove_config: True
+  master_remove_config: False
 
   # Set this to False to not have the formula install packages (in the case you
   # install Salt via git/pip/etc.)
@@ -26,24 +26,24 @@ salt:
   # To get the available releases:
   # * http://repo.saltstack.com/yum/redhat/7/x86_64/
   # * http://repo.saltstack.com/apt/debian/8/amd64/
-  release: 2016.11
+  release: 2017.7
 
   # salt master config
   master:
     fileserver_backend:
       - git
-      - s3fs
+#      - s3fs
       - roots
     gitfs_remotes:
       - git://github.com/saltstack-formulas/salt-formula.git:
         - base: develop
-    s3.keyid: GKTADJGHEIQSXMKKRBJ08H
-    s3.key: askdjghsdfjkghWupUjasdflkdfklgjsdfjajkghs
-    s3.buckets:
-      - bucket1
-      - bucket2
-      - bucket3
-      - bucket4
+#    s3.keyid: GKTADJGHEIQSXMKKRBJ08H
+#    s3.key: askdjghsdfjkghWupUjasdflkdfklgjsdfjajkghs
+#    s3.buckets:
+#      - bucket1
+#      - bucket2
+#      - bucket3
+#      - bucket4
     file_roots:
       base:
         - /srv/salt
@@ -51,12 +51,12 @@ salt:
       base:
         - /srv/pillar
     # for salt-api with tornado rest interface
-    rest_tornado:
-      port: 8000
-      ssl_crt: /etc/pki/api/certs/server.crt
-      ssl_key: /etc/pki/api/certs/server.key
-      debug: False
-      disable_ssl: False
+#    rest_tornado:
+#      port: 8000
+#      ssl_crt: /etc/pki/api/certs/server.crt
+#      ssl_key: /etc/pki/api/certs/server.key
+#      debug: False
+#      disable_ssl: False
     # for profile configuration as https://docs.saltstack.com/en/latest/topics/tutorials/lxc.html#tutorial-lxc-profiles
     lxc.container_profile:
       debian:
@@ -76,9 +76,9 @@ salt:
           flags: up
     ## for external auth - LDAP
       # filter to use for Active Directory LDAP
-    auth.ldap.filter: {% raw %}'sAMAccountName={{username}}'{% endraw %}
+    #auth.ldap.filter: {% raw %}'sAMAccountName={{username}}'{% endraw %}
       # filter to use for Most other LDAP servers
-    auth.ldap.filter: {% raw %}'uid={{ username }}'{% endraw %}
+    #auth.ldap.filter: {% raw %}'uid={{ username }}'{% endraw %}
 
     # Define winrepo provider, by default support order is pygit2, gitpython
     # Set to gitpython for Debian & Ubuntu to get around saltstack/salt#35993
@@ -86,20 +86,20 @@ salt:
     winrepo_provider: gitpython
 
     # optional engine configuration
-    engines:
-      slack:
-        token: xoxp-XXXXX-XXXXXXX
-        control: True
-        valid_users:
-          - someuser
-          - otheruser
-        valid_commands:
-          - test.ping
-          - list_jobs
-        aliases:
-          list_jobs:
-            type: runner
-            cmd: jobs.list_jobs
+#    engines:
+#      slack:
+#        token: xoxp-XXXXX-XXXXXXX
+#        control: True
+#        valid_users:
+#          - someuser
+#          - otheruser
+#        valid_commands:
+#          - test.ping
+#          - list_jobs
+#        aliases:
+#          list_jobs:
+#            type: runner
+#            cmd: jobs.list_jobs
 
     # optional: these reactors will be configured on the master
     # They override reactors configured in
@@ -112,7 +112,7 @@ salt:
   minion:
 
     # single master setup
-    master: salt
+    master: 192.168.123.2
 
     # multi master setup
     #master:
@@ -147,8 +147,8 @@ salt:
     # that is preferable because it doesn't affect the conf file and
     # doesn't require a minion restart. However, you can configure it
     # here instead if you really want to.
-    mine_functions:
-      network.interface_ip: [eth0]
+    #mine_functions:
+      #network.interface_ip: [eth0]
 
     # Define a minion scheduler
     schedule:
@@ -162,20 +162,20 @@ salt:
     auth_principal: kadmin/admin
 
     # optional engine configuration
-    engines:
-      slack:
-        token: xoxp-XXXXX-XXXXXXX
-        control: True
-        valid_users:
-          - someuser
-          - otheruser
-        valid_commands:
-          - test.ping
-          - list_jobs
-        aliases:
-          list_jobs:
-            type: runner
-            cmd: jobs.list_jobs
+#    engines:
+#      slack:
+#        token: xoxp-XXXXX-XXXXXXX
+#        control: True
+#        valid_users:
+#          - someuser
+#          - otheruser
+#        valid_commands:
+#          - test.ping
+#          - list_jobs
+#        aliases:
+#          list_jobs:
+#            type: runner
+#            cmd: jobs.list_jobs
 
     # optional beacons configuration
     beacons:
@@ -203,35 +203,35 @@ salt:
     master: salt
 
     # For non-templated custom cloud provider/profile/map files
-    providers:
-      provider-filename1.conf:
-        vmware-prod:
-          driver: vmware
-          user: myusernameprod
-          password: mypassword
-        vmware-nonprod:
-          driver: vmware
-          user: myusernamenonprod
-          password: mypassword
-    profiles:
-      profile-filename1.conf:
-        server-non-prod:
-          clonefrom: rhel6xtemplatenp
-          grains:
-            platform:
-              name: salt
-              realm: lab
-            subscription_level: standard
-          memory: 8GB
-          num_cpus: 4
-          password: sUpErsecretey
-          provider: vmware-nonprod
-    maps:
-      map-filename1.map:
-        server-non-prod:
-          - host.mycompany.com:
-              grains:
-                environment: dev1
+#    providers:
+#      provider-filename1.conf:
+#        vmware-prod:
+#          driver: vmware
+#          user: myusernameprod
+#          password: mypassword
+#        vmware-nonprod:
+#          driver: vmware
+#          user: myusernamenonprod
+#          password: mypassword
+#    profiles:
+#      profile-filename1.conf:
+#        server-non-prod:
+#          clonefrom: rhel6xtemplatenp
+#          grains:
+#            platform:
+#              name: salt
+#              realm: lab
+#            subscription_level: standard
+#          memory: 8GB
+#          num_cpus: 4
+#          password: sUpErsecretey
+#          provider: vmware-nonprod
+#    maps:
+#      map-filename1.map:
+#        server-non-prod:
+#          - host.mycompany.com:
+#              grains:
+#                environment: dev1
 
     # You can take profile and map templates from an alternate location
     # if you want to write your own.
@@ -242,26 +242,26 @@ salt:
 
     # These settings are used by the default provider templates and
     # only need to be set for the ones you're using.
-    aws_key: AWSKEYIJSHJAIJS6JSH
-    aws_secret: AWSSECRETYkkDY1iQf9zRtl9+pW+Nm+aZY95
-    gce_project: test
-    gce_service_account_email_address: 867543072364-orl4h2tpp8jcn1tr9ipj@developer.gserviceaccount.com
-    rsos_user: afeawofghob
-    rsos_tenant: tenant_id_number
-    rsos_apikey: WFJIOJEOIGHSOFHESO
-    rsos_regions:
-      - ORD
-      - DFW
-      - IAD
-      - SYD
-      - HKG
+#    aws_key: AWSKEYIJSHJAIJS6JSH
+#    aws_secret: AWSSECRETYkkDY1iQf9zRtl9+pW+Nm+aZY95
+#    gce_project: test
+#    gce_service_account_email_address: 867543072364-orl4h2tpp8jcn1tr9ipj@developer.gserviceaccount.com
+#    rsos_user: afeawofghob
+#    rsos_tenant: tenant_id_number
+#    rsos_apikey: WFJIOJEOIGHSOFHESO
+#    rsos_regions:
+#      - ORD
+#      - DFW
+#      - IAD
+#      - SYD
+#      - HKG
 
-  ssh_roster:
-    prod1:
-      host: host.example.com
-      user: ubuntu
-      sudo: True
-      priv: /etc/salt/ssh_keys/sshkey.pem
+#  ssh_roster:
+#    prod1:
+#      host: host.example.com
+#      user: ubuntu
+#      sudo: True
+#      priv: /etc/salt/ssh_keys/sshkey.pem
   gitfs:
     keys:
       global:
@@ -278,18 +278,18 @@ salt:
     - 'deploy':
       - /srv/salt/reactors/deploy.sls
 
-salt_cloud_certs:
-  aws:
-    pem: |
-      -----BEGIN RSA PRIVATE KEY-----
-      ...........
-      -----END RSA PRIVATE KEY-----
+#salt_cloud_certs:
+#  aws:
+#    pem: |
+#      -----BEGIN RSA PRIVATE KEY-----
+#      ...........
+#      -----END RSA PRIVATE KEY-----
 
-  gce:
-    pem: |
-      -----BEGIN RSA PRIVATE KEY-----
-      ...........
-      -----END RSA PRIVATE KEY-----
+#  gce:
+#    pem: |
+#      -----BEGIN RSA PRIVATE KEY-----
+#      ...........
+#      -----END RSA PRIVATE KEY-----
 
 salt_formulas:
   git_opts:
